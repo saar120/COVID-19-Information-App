@@ -32,7 +32,7 @@ const getCovidDataByContinent = async (continent) => {
     continentsClicked.push(continent);
     let covidArr = [];
     countriesData[continent].forEach((country) => {
-      covidArr.push(axios.get(apis.proxy + apis.covidAPI + country.code));
+      covidArr.push(axios.get(apis.covidAPI + country.code));
     });
     //only uses valid results that returns from the promise.
     const results = await Promise.all(covidArr.map((p) => p.catch((e) => e)));
@@ -91,9 +91,10 @@ function generateChart(continent, checkFor) {
   data.datasets[0].label = checkFor;
   config.options.plugins.title.text = continent.toUpperCase();
   countriesData[continent].forEach((country) => {
-    console.log(country);
-    labels.push(covidData[country.code].name);
-    data.datasets[0].data.push(covidData[country.code].latest_data[checkFor]);
+    if (covidData[country.code]) {
+      labels.push(covidData[country.code].name);
+      data.datasets[0].data.push(covidData[country.code].latest_data[checkFor]);
+    }
   });
   myChart = new Chart(ctx, config);
 }
@@ -108,12 +109,6 @@ const checkIfClicked = (e) => {
     return;
   }
   getCovidDataByContinent(targetContinent).then(() => generateChart(targetContinent, "confirmed"));
-};
-
-const setDataToChart = (continent) => {
-  countriesData[continent].forEach((country) => {
-    console.log(covidData[country.code]);
-  });
 };
 
 const button = document.querySelectorAll("button");
