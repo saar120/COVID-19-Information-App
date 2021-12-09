@@ -6,8 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/style.css" />
     <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js"
+      integrity="sha512-tMabqarPtykgDtdtSqCL3uLVM0gS1ZkUAVhRFu1vSEFgvB73niFQWJuvviDyBGBH22Lcau4rHB5p2K2T0Xvr6Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script defer src="/scripts/app.js"></script>
     <title>COVID-19 Info</title>
   </head>
-  <body></body>
+  <body>
+    <button class="asia">click for asia</button>
+    <button class="africa">click for africa</button>
+    <button class="oceania">click for oceania</button>
+    <button class="europe">click for europe</button>
+    <div class="container">
+      <canvas id="myChart"></canvas>
+    </div>
+  </body>
 </html>
