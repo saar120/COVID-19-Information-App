@@ -6,7 +6,7 @@ const apis = {
   covidAPI: "https://corona-api.com/countries/",
 };
 
-const covidData = {};
+const covidData = { statuses: ["confirmed", "deaths", "recovered", "critical"] };
 const countriesData = {};
 const continentsClicked = [];
 
@@ -40,7 +40,10 @@ const getCovidDataByContinent = async (continent) => {
 
     validResults.forEach((country) => {
       const { data } = country.data;
-      covidData[data.code] = { name: data.name, latest_data: data.latest_data };
+      covidData[data.code] = {
+        name: data.name,
+        latest_data: data.latest_data,
+      };
     });
   } catch (error) {
     console.error(error);
@@ -53,17 +56,9 @@ let myChart;
 
 function generateChart(continent, checkFor) {
   if (myChart) myChart.destroy();
-  let labels = [];
   const data = {
-    labels,
-    datasets: [
-      {
-        data: [],
-        label: "",
-        fill: true,
-        borderColor: "#000",
-      },
-    ],
+    labels: [],
+    datasets: [],
   };
 
   const config = {
@@ -76,9 +71,15 @@ function generateChart(continent, checkFor) {
           text: "",
           font: { size: 25 },
         },
+        legend: {
+          display: false,
+        },
       },
       scales: {
         x: {
+          grid: {
+            offset: true,
+          },
           stacked: false,
           beginAtZero: true,
           ticks: {
@@ -88,34 +89,54 @@ function generateChart(continent, checkFor) {
       },
     },
   };
-  data.datasets[0].label = checkFor;
+
+  data.datasets.push(createChartDataSet(continent, checkFor));
+
   config.options.plugins.title.text = continent.toUpperCase();
   countriesData[continent].forEach((country) => {
     if (covidData[country.code]) {
-      labels.push(covidData[country.code].name);
-      data.datasets[0].data.push(covidData[country.code].latest_data[checkFor]);
+      data.labels.push(covidData[country.code].name);
     }
   });
   myChart = new Chart(ctx, config);
 }
 
+function createChartDataSet(continent, checkFor) {
+  const bgColor = ["rgb(57, 121, 219)", "rgb(107, 102, 102)", "rgb(41, 198, 78)", "rgb(229, 73, 73)"];
+  const dataSet = {
+    data: [],
+    label: checkFor,
+    fill: true,
+    borderColor: "#000",
+    backgroundColor: bgColor[0],
+  };
+  countriesData[continent].forEach((country) => {
+    if (covidData[country.code]) {
+      dataSet.data.push(covidData[country.code].latest_data[checkFor]);
+    }
+  });
+  return dataSet;
+}
+
 // check if continent already clicked to prevent rewriting of data.
 const checkIfClicked = (e) => {
-  const targetContinent = e.target.className;
+  const targetContinent = e.target.dataset.region;
   console.log(targetContinent);
   if (continentsClicked.includes(targetContinent)) {
-    console.log("%cNow from storage", "color: green; background: yellow; font-size: 30px");
+    console.log("%cNow from storage", "color: green; background: yellow; font-size: 20px");
     generateChart(targetContinent, "confirmed");
     return;
   }
   getCovidDataByContinent(targetContinent).then(() => generateChart(targetContinent, "confirmed"));
 };
 
-const button = document.querySelectorAll("button");
+const regionButtons = document.querySelectorAll(".region-btn");
+const statusButtons = document.querySelectorAll(".status-btn");
 //event listeners
 window.onload = getCountriesData;
-button.forEach((button) => {
-  button.addEventListener("click", (e) => {
-    checkIfClicked(e);
+regionButtons.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    checkIfClicked(event);
+    statusButtons.forEach((button) => (button.disabled = false));
   });
 });

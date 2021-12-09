@@ -16,10 +16,19 @@
     <title>COVID-19 Info</title>
   </head>
   <body>
-    <button class="asia">click for asia</button>
-    <button class="africa">click for africa</button>
-    <button class="oceania">click for oceania</button>
-    <button class="europe">click for europe</button>
+    <div class="region-button">
+      <button data-region="asia" class="region-btn">ASIA</button>
+      <button data-region="africa" class="region-btn">AFRICA</button>
+      <button data-region="oceania" class="region-btn">OCEANIA</button>
+      <button data-region="europe" class="region-btn">EUROPE</button>
+      <button data-region="americas" class="region-btn">AMERICAS</button>
+    </div>
+    <div class="status-buttons">
+      <button data-status="confirmed" class="status-btn" disabled="disabled">confirmed</button>
+      <button data-status="deaths" class="status-btn" disabled="disabled">deaths</button>
+      <button data-status="recovered" class="status-btn" disabled="disabled">recovered</button>
+      <button data-status="critical" class="status-btn" disabled="disabled">critical</button>
+    </div>
     <div class="container">
       <canvas id="myChart"></canvas>
     </div>
