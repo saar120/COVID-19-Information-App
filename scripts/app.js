@@ -65,6 +65,7 @@ const getCovidDataByContinent = async (continent) => {
 
 //--------------------- Chart Creation---------------------
 const ctx = document.getElementById("myChart").getContext("2d");
+ctx.fillStyle = "#c7e2b2";
 let myChart;
 
 function generateChart(continent, checkFor) {
@@ -104,7 +105,7 @@ function generateChart(continent, checkFor) {
 
   //check if it is first chart on load and set
   if (continent == undefined && checkFor == undefined) {
-    config.options.plugins.title.text = "30 Days Confirmed Cases";
+    config.options.plugins.title.text = "30 Days Total Confirmed Worldwide";
     config.type = "line";
     config.options.scales.y.beginAtZero = true;
     covidData.global.forEach((date) => {
@@ -117,7 +118,7 @@ function generateChart(continent, checkFor) {
     config.options.plugins.title.text = continent.toUpperCase();
     countriesData[continent].forEach((country) => {
       if (covidData[country.code]) {
-        data.labels.push(covidData[country.code].name);
+        data.labels.push(shortenString(covidData[country.code].name));
       }
     });
   }
@@ -130,7 +131,7 @@ function createChartDataSet(continent, checkFor) {
     label: checkFor,
     fill: true,
     borderColor: "#000",
-    backgroundColor: "rgba(238, 161, 114, 0.64)",
+    backgroundColor: "#092532",
   };
   countriesData[continent].forEach((country) => {
     if (covidData[country.code]) {
@@ -153,6 +154,10 @@ function createLoadCharDataSet() {
   return dataSet;
 }
 
+function shortenString(str) {
+  return str.length > 15 ? str.substr(0, 15 - 1) + "..." : str;
+}
+
 //------------------------------------------
 
 // check if continent already clicked to prevent rewriting of data.
@@ -168,6 +173,7 @@ const checkIfClicked = (targetContinent, checkFor) => {
 
 const createButton = (code) => {
   const btn = document.createElement("button");
+  btn.classList.add("sml", "btn");
   btn.setAttribute("data-code", code.code);
   btn.textContent = covidData[code.code].name;
   return btn;

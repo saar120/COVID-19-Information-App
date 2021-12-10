@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/style.css" />
+    <script src="https://kit.fontawesome.com/f0a1f97ae0.js" crossorigin="anonymous"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js"
@@ -13,26 +14,37 @@
       referrerpolicy="no-referrer"
     ></script>
     <script defer src="/scripts/app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600&display=swap" rel="stylesheet" />
     <title>COVID-19 Info</title>
   </head>
   <body>
     <h1>COVID-19 Info Site</h1>
     <div class="region-button">
-      <button data-region="asia" class="region-btn">ASIA</button>
-      <button data-region="africa" class="region-btn">AFRICA</button>
-      <button data-region="oceania" class="region-btn">OCEANIA</button>
-      <button data-region="europe" class="region-btn">EUROPE</button>
-      <button data-region="americas" class="region-btn">AMERICAS</button>
+      <button data-region="asia" class="region-btn btn">Asia</button>
+      <button data-region="africa" class="region-btn btn">Africa</button>
+      <button data-region="oceania" class="region-btn btn">Oceania</button>
+      <button data-region="europe" class="region-btn btn">Europe</button>
+      <button data-region="americas" class="region-btn btn">Americas</button>
     </div>
     <div class="status-buttons">
-      <button data-status="confirmed" class="status-btn">confirmed</button>
-      <button data-status="deaths" class="status-btn">deaths</button>
-      <button data-status="recovered" class="status-btn">recovered</button>
-      <button data-status="critical" class="status-btn">critical</button>
+      <button data-status="confirmed" class="status-btn btn">Confirmed<i class="fas fa-check"></i></button>
+      <button data-status="deaths" class="status-btn btn">Deaths<i class="fas fa-skull"></i></button>
+      <button data-status="recovered" class="status-btn btn">Recovered <i class="far fa-thumbs-up"></i></button>
+      <button data-status="critical" class="status-btn btn">Critical<i class="fas fa-hospital-alt"></i></button>
     </div>
     <div class="container">
       <canvas id="myChart"></canvas>
     </div>
-    <div class="continent-btn"></div>
+    <div class="countries-container">
+      <div class="continent-btn"></div>
+      <div class="data-holder">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+      </div>
+    </div>
   </body>
 </html>
