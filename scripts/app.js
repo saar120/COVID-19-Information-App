@@ -4,9 +4,10 @@ const apis = {
   proxy: "https://intense-mesa-62220.herokuapp.com/",
   countryAPI: "https://restcountries.herokuapp.com/api/v1/",
   covidAPI: "https://corona-api.com/countries/",
+  covidGlobal: "https://corona-api.com/timeline",
 };
 
-const covidData = { statuses: ["confirmed", "deaths", "recovered", "critical"] };
+const covidData = {};
 const countriesData = {};
 const continentsClicked = [];
 
@@ -20,6 +21,19 @@ const getCountriesData = async () => {
         ? countriesData[region].push({ code: country.cca2 })
         : (countriesData[region] = [{ code: country.cca2 }]);
     });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Get data for worldwide to show on site load
+const getGlobalData = async () => {
+  try {
+    const { data } = await axios.get(apis.covidGlobal);
+    covidData.global = [];
+    for (let i = 0; i < 30; i++) {
+      covidData.global.push({ date: data.data[i].date, confirmed: data.data[i].confirmed });
+    }
   } catch (error) {
     console.error(error);
   }
@@ -61,7 +75,7 @@ function generateChart(continent, checkFor) {
   };
 
   const config = {
-    type: "line",
+    type: "bar",
     data: data,
     options: {
       plugins: {
@@ -76,43 +90,65 @@ function generateChart(continent, checkFor) {
       },
       scales: {
         x: {
-          grid: {
-            offset: true,
-          },
-          stacked: false,
-          beginAtZero: true,
+          reverse: true,
           ticks: {
             autoSkip: false,
           },
+        },
+        y: {
+          beginAtZero: false,
         },
       },
     },
   };
 
-  data.datasets.push(createChartDataSet(continent, checkFor));
-
-  config.options.plugins.title.text = continent.toUpperCase();
-  countriesData[continent].forEach((country) => {
-    if (covidData[country.code]) {
-      data.labels.push(covidData[country.code].name);
-    }
-  });
+  //check if it is first chart on load and set
+  if (continent == undefined && checkFor == undefined) {
+    config.options.plugins.title.text = "30 Days Confirmed Cases";
+    config.type = "line";
+    config.options.scales.y.beginAtZero = true;
+    covidData.global.forEach((date) => {
+      data.labels.push(date.date);
+    });
+    data.datasets.push(createLoadCharDataSet());
+  } else {
+    // update chart according to data
+    data.datasets.push(createChartDataSet(continent, checkFor));
+    config.options.plugins.title.text = continent.toUpperCase();
+    countriesData[continent].forEach((country) => {
+      if (covidData[country.code]) {
+        data.labels.push(covidData[country.code].name);
+      }
+    });
+  }
   myChart = new Chart(ctx, config);
 }
 
 function createChartDataSet(continent, checkFor) {
-  const bgColor = ["rgb(57, 121, 219)", "rgb(107, 102, 102)", "rgb(41, 198, 78)", "rgb(229, 73, 73)"];
   const dataSet = {
     data: [],
     label: checkFor,
     fill: true,
     borderColor: "#000",
-    backgroundColor: bgColor[0],
+    backgroundColor: "rgba(238, 161, 114, 0.64)",
   };
   countriesData[continent].forEach((country) => {
     if (covidData[country.code]) {
       dataSet.data.push(covidData[country.code].latest_data[checkFor]);
     }
+  });
+  return dataSet;
+}
+
+function createLoadCharDataSet() {
+  const dataSet = {
+    data: [],
+    label: "Confirmed",
+    fill: true,
+    borderColor: "#000",
+  };
+  covidData.global.forEach((date) => {
+    dataSet.data.push(date.confirmed);
   });
   return dataSet;
 }
@@ -134,7 +170,10 @@ let currentStatus;
 
 //event listeners
 
-window.onload = getCountriesData;
+window.onload = () => {
+  getCountriesData();
+  getGlobalData().then(() => generateChart());
+};
 
 regionStatusBtn.forEach((button) => {
   button.addEventListener("click", (e) => {
