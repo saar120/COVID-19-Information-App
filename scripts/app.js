@@ -153,17 +153,40 @@ function createLoadCharDataSet() {
   return dataSet;
 }
 
+//------------------------------------------
+
 // check if continent already clicked to prevent rewriting of data.
 const checkIfClicked = (targetContinent, checkFor) => {
   if (!currentContinent) return;
   if (continentsClicked.includes(targetContinent)) {
     console.log("%cNow from storage", "color: green; background: yellow; font-size: 20px");
-    generateChart(targetContinent, checkFor);
+    drawChartAndBtn(targetContinent, checkFor);
     return;
   }
-  getCovidDataByContinent(targetContinent).then(() => generateChart(targetContinent, checkFor));
+  getCovidDataByContinent(targetContinent).then(() => drawChartAndBtn(targetContinent, checkFor));
 };
 
+const createButton = (code) => {
+  const btn = document.createElement("button");
+  btn.setAttribute("data-code", code.code);
+  btn.textContent = covidData[code.code].name;
+  return btn;
+};
+
+const countriesButtons = (targetContinent) => {
+  const countriesBtnContainer = document.querySelector(".continent-btn");
+  countriesBtnContainer.innerHTML = "";
+  countriesData[targetContinent].forEach((country) => {
+    if (covidData[country.code]) {
+      countriesBtnContainer.appendChild(createButton(country));
+    }
+  });
+};
+
+function drawChartAndBtn(targetContinent, checkFor) {
+  generateChart(targetContinent, checkFor);
+  countriesButtons(targetContinent);
+}
 const regionStatusBtn = document.querySelectorAll("button");
 let currentContinent;
 let currentStatus;
