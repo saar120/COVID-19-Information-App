@@ -9,3 +9,7 @@ body {
   height: 50vh;
   width: 75vw;
 }
+
+.picked {
+  color: red;
+}

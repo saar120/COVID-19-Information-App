@@ -20,7 +20,6 @@ const getCountriesData = async () => {
         ? countriesData[region].push({ code: country.cca2 })
         : (countriesData[region] = [{ code: country.cca2 }]);
     });
-    // countriesData.europe.splice(40, 1); // bug - removes XK
   } catch (error) {
     console.error(error);
   }
@@ -119,24 +118,40 @@ function createChartDataSet(continent, checkFor) {
 }
 
 // check if continent already clicked to prevent rewriting of data.
-const checkIfClicked = (e) => {
-  const targetContinent = e.target.dataset.region;
-  console.log(targetContinent);
+const checkIfClicked = (targetContinent, checkFor) => {
+  if (!currentContinent) return;
   if (continentsClicked.includes(targetContinent)) {
     console.log("%cNow from storage", "color: green; background: yellow; font-size: 20px");
-    generateChart(targetContinent, "confirmed");
+    generateChart(targetContinent, checkFor);
     return;
   }
-  getCovidDataByContinent(targetContinent).then(() => generateChart(targetContinent, "confirmed"));
+  getCovidDataByContinent(targetContinent).then(() => generateChart(targetContinent, checkFor));
 };
 
-const regionButtons = document.querySelectorAll(".region-btn");
-const statusButtons = document.querySelectorAll(".status-btn");
+const regionStatusBtn = document.querySelectorAll("button");
+let currentContinent;
+let currentStatus;
+
 //event listeners
+
 window.onload = getCountriesData;
-regionButtons.forEach((button) => {
-  button.addEventListener("click", (event) => {
-    checkIfClicked(event);
-    statusButtons.forEach((button) => (button.disabled = false));
+
+regionStatusBtn.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    buttonHandler(e);
+    checkIfClicked(currentContinent, currentStatus);
   });
 });
+
+// set value to currentContinent or currentStatus depending on the selected button
+function buttonHandler(e) {
+  e.target.dataset.status ? (currentStatus = e.target.dataset.status) : (currentContinent = e.target.dataset.region);
+  clearAllPicked(e);
+  e.target.classList.add("picked");
+}
+
+function clearAllPicked(e) {
+  Array.from(e.target.parentElement.children).forEach((child) => {
+    child.classList.remove("picked");
+  });
+}
