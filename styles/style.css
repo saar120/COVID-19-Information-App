@@ -22,6 +22,9 @@ h3 {
 .container {
   position: relative;
   width: 75vw;
+  height: 600px;
+  border-radius: 10px;
+  border: 2px solid #092532;
 }
 
 .btn {
@@ -94,6 +97,12 @@ i {
   min-width: 10rem;
 }
 
+.box > h2 {
+  text-align: center;
+  min-width: 2rem;
+  min-height: 2.625rem;
+}
+
 .region-button,
 .status-buttons {
   display: flex;
@@ -157,4 +166,17 @@ button.sml {
   border-radius: 5px;
   background-color: #c7e2b2;
   color: #092532;
+}
+
+@media only screen and (max-width: 900px) {
+  .container {
+    width: 90%;
+    height: 40%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .container {
+    width: 95%;
+    height: 300px;
+  }
 }
