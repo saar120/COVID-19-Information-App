@@ -14,9 +14,6 @@ body {
   margin: 0.5rem;
 }
 
-/* h1 {
-  margin-top: 1rem;
-} */
 h3 {
   padding: 1rem;
   text-align: center;
@@ -25,7 +22,6 @@ h3 {
 .container {
   position: relative;
   width: 85vw;
-  max-height: 300rem;
 }
 
 .btn {
@@ -96,6 +92,7 @@ i {
   gap: 1rem;
   border-radius: 10px;
   height: 50%;
+  min-width: 10rem;
 }
 
 .region-button,
