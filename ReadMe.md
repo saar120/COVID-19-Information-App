@@ -2,7 +2,7 @@
 
 ## Description
 
-Display COVID-19 data by region using chart.js 
+Display COVID-19 data by region using chart.js
 
 ## Site
 
@@ -14,10 +14,10 @@ While building this site I've used axios and chart.js libraries.
 
 ## Know Issues
 
-* Some of the countries do not report data - need to remove them.
-* Graph responsiveness is not the best.
+- Some of the countries do not report data - need to remove them.
+- Graph responsiveness is not the best.
 
 ## Todo
 
-* Add search feature to the countries.
-* Improve code readablity.
+- Add search feature to the countries.
+- Improve code readability.
