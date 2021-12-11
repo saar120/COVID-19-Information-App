@@ -21,7 +21,7 @@ h3 {
 
 .container {
   position: relative;
-  width: 85vw;
+  width: 75vw;
 }
 
 .btn {
@@ -76,7 +76,6 @@ i {
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  width: 70%;
   border-radius: 10px;
   background-color: #092532;
   color: #c7e2b2;
@@ -137,6 +136,10 @@ i {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+}
+
+.link {
+  min-width: 8rem;
 }
 
 .hidden {

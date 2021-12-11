@@ -93,7 +93,7 @@ function generateChart(continent, checkFor) {
         x: {
           reverse: true,
           ticks: {
-            autoSkip: false,
+            autoSkip: true,
           },
         },
         y: {
@@ -233,7 +233,24 @@ function clearAllPicked(e) {
   });
 }
 
-// dropdown
+// -------------------------------------Individual Country Data------------------------------------------------
+
+document.addEventListener("click", (e) => {
+  const isCountryBtn = e.target.matches("[data-code]");
+  if (!isCountryBtn) return;
+  updateDataHolders(e);
+  e.target.closest("[data-dropdown]").classList.toggle("active");
+});
+
+function updateDataHolders(e) {
+  const dataHolders = document.querySelectorAll(".num-data");
+  const currentCountry = e.target.dataset.code;
+  dataHolders.forEach((holder) => {
+    holder.textContent = covidData[currentCountry].latest_data[holder.dataset.type];
+  });
+  document.querySelector(".link").textContent = covidData[currentCountry].name;
+}
+// -------------------------------------dropdown------------------------------------------------
 
 document.addEventListener("click", (e) => {
   const isDropdown = e.target.matches("[data-dropdown-button]");
