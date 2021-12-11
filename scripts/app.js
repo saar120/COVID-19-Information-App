@@ -98,6 +98,15 @@ function generateChart(continent, checkFor) {
           },
         },
         y: {
+          ticks: {
+            callback: function (label, index, labels) {
+              return label / 1000 + "k";
+            },
+            scaleLabel: {
+              display: true,
+              labelString: "1k = 1000",
+            },
+          },
           beginAtZero: false,
         },
       },
