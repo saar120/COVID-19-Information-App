@@ -22,28 +22,50 @@
   <body>
     <h1>COVID-19 Info Site</h1>
     <div class="region-button">
-      <button data-region="asia" class="region-btn btn">Asia</button>
-      <button data-region="africa" class="region-btn btn">Africa</button>
-      <button data-region="oceania" class="region-btn btn">Oceania</button>
-      <button data-region="europe" class="region-btn btn">Europe</button>
-      <button data-region="americas" class="region-btn btn">Americas</button>
+      <button data-region="asia" class="region-btn select-btn btn">Asia</button>
+      <button data-region="africa" class="region-btn select-btn btn">Africa</button>
+      <button data-region="oceania" class="region-btn select-btn btn">Oceania</button>
+      <button data-region="europe" class="region-btn select-btn btn">Europe</button>
+      <button data-region="americas" class="region-btn select-btn btn">Americas</button>
     </div>
     <div class="status-buttons">
-      <button data-status="confirmed" class="status-btn btn">Confirmed<i class="fas fa-check"></i></button>
-      <button data-status="deaths" class="status-btn btn">Deaths<i class="fas fa-skull"></i></button>
-      <button data-status="recovered" class="status-btn btn">Recovered <i class="far fa-thumbs-up"></i></button>
-      <button data-status="critical" class="status-btn btn">Critical<i class="fas fa-hospital-alt"></i></button>
+      <button data-status="confirmed" class="status-btn select-btn btn">Confirmed<i class="fas fa-check"></i></button>
+      <button data-status="deaths" class="status-btn select-btn btn">Deaths<i class="fas fa-skull"></i></button>
+      <button data-status="recovered" class="status-btn select-btn btn">
+        Recovered <i class="far fa-thumbs-up"></i>
+      </button>
+      <button data-status="critical" class="status-btn select-btn btn">
+        Critical<i class="fas fa-hospital-alt"></i>
+      </button>
     </div>
     <div class="container">
       <canvas id="myChart"></canvas>
     </div>
-    <div class="countries-container">
-      <div class="continent-btn"></div>
-      <div class="data-holder">
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
+    <div class="countries-section">
+      <h3>View Data By Country</h3>
+      <div class="countries-container">
+        <div class="dropdown" data-dropdown>
+          <button class="btn link" data-dropdown-button>Select Country</button>
+          <div class="dropdown-menu"></div>
+        </div>
+        <div class="data-holder">
+          <div class="box">
+            <h3>Confirmed</h3>
+            <h2 class="num-data">33758</h2>
+          </div>
+          <div class="box">
+            <h3>Confirmed</h3>
+            <h2 class="num-data">33758</h2>
+          </div>
+          <div class="box">
+            <h3>Confirmed</h3>
+            <h2 class="num-data">33758</h2>
+          </div>
+          <div class="box">
+            <h3>Confirmed</h3>
+            <h2 class="num-data">33758</h2>
+          </div>
+        </div>
       </div>
     </div>
   </body>

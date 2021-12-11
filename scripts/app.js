@@ -180,7 +180,7 @@ const createButton = (code) => {
 };
 
 const countriesButtons = (targetContinent) => {
-  const countriesBtnContainer = document.querySelector(".continent-btn");
+  const countriesBtnContainer = document.querySelector(".dropdown-menu");
   countriesBtnContainer.innerHTML = "";
   countriesData[targetContinent].forEach((country) => {
     if (covidData[country.code]) {
@@ -193,7 +193,7 @@ function drawChartAndBtn(targetContinent, checkFor) {
   generateChart(targetContinent, checkFor);
   countriesButtons(targetContinent);
 }
-const regionStatusBtn = document.querySelectorAll("button");
+const regionStatusBtn = document.querySelectorAll(".select-btn");
 let currentContinent;
 let currentStatus;
 
@@ -213,9 +213,18 @@ regionStatusBtn.forEach((button) => {
 
 // set value to currentContinent or currentStatus depending on the selected button
 function buttonHandler(e) {
-  e.target.dataset.status ? (currentStatus = e.target.dataset.status) : (currentContinent = e.target.dataset.region);
+  if (e.target.dataset.status) {
+    currentStatus = e.target.dataset.status;
+  } else {
+    currentContinent = e.target.dataset.region;
+    showCountriesContainer();
+  }
   clearAllPicked(e);
   e.target.classList.add("picked");
+}
+
+function showCountriesContainer() {
+  document.querySelector(".countries-section").classList.add("shown");
 }
 
 function clearAllPicked(e) {
@@ -223,3 +232,20 @@ function clearAllPicked(e) {
     child.classList.remove("picked");
   });
 }
+
+// dropdown
+
+document.addEventListener("click", (e) => {
+  const isDropdown = e.target.matches("[data-dropdown-button]");
+  if (!isDropdown && e.target.closest("[data-dropdown]") != null) return;
+  let currentDropdown;
+  if (isDropdown) {
+    currentDropdown = e.target.closest("[data-dropdown]");
+    currentDropdown.classList.toggle("active");
+  }
+
+  document.querySelectorAll("[data-dropdown]").forEach((dropdown) => {
+    if (dropdown === currentDropdown) return;
+    dropdown.classList.remove("active");
+  });
+});
