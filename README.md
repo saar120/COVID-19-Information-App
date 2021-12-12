@@ -19,5 +19,5 @@ While building this site I've used axios and chart.js libraries.
 
 ## Todo
 
-- Add search feature to the countries.
+- ~Add search feature to the countries.~ ADDED
 - Improve code readability.
