@@ -6,7 +6,7 @@ Display COVID-19 data by region using chart.js
 
 ## Site
 
-[COVID-19 Info](https://quizzical-hoover-24942a.netlify.app)
+[COVID-19 Info](https://covid-19-world-info.netlify.app)
 
 ## Libraries Used
 
