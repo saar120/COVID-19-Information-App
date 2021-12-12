@@ -121,6 +121,8 @@ i {
   gap: 0.2rem;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
   position: absolute;
   left: 0;
   top: calc(100% + 0.04rem);
@@ -166,6 +168,16 @@ button.sml {
   border-radius: 5px;
   background-color: #c7e2b2;
   color: #092532;
+}
+
+.search-input {
+  background-color: #c7e2b2;
+  color: #092532;
+  outline: none;
+  border-radius: 5px;
+  padding: 0.4rem;
+  max-height: 2rem;
+  width: 100%;
 }
 
 @media only screen and (max-width: 900px) {

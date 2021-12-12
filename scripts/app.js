@@ -192,6 +192,8 @@ const createButton = (code) => {
 const countriesButtons = (targetContinent) => {
   const countriesBtnContainer = document.querySelector(".dropdown-menu");
   countriesBtnContainer.innerHTML = "";
+  countriesBtnContainer.appendChild(createSearchInput());
+  inputListener();
   countriesData[targetContinent].forEach((country) => {
     if (covidData[country.code]) {
       countriesBtnContainer.appendChild(createButton(country));
@@ -243,7 +245,7 @@ function clearAllPicked(e) {
   });
 }
 
-// -------------------------------------Individual Country Data------------------------------------------------
+// -------------------------------------Individual Country Data-----------------------------------
 
 document.addEventListener("click", (e) => {
   const isCountryBtn = e.target.matches("[data-code]");
@@ -276,3 +278,30 @@ document.addEventListener("click", (e) => {
     dropdown.classList.remove("active");
   });
 });
+
+// -------------------------------------Search Box For Dropdown---------------------------------
+function createSearchInput() {
+  const input = document.createElement("input");
+  input.type = "text";
+  input.classList.add("search-input", "sml");
+  input.placeholder = "Search...";
+  return input;
+}
+
+function searchCountry(e) {
+  const countries = document.querySelectorAll("[data-code]");
+  const input = e.target.value.toLowerCase();
+  for (let i = 0; i < countries.length; i++) {
+    if (countries[i].textContent.toLowerCase().indexOf(input) > -1) {
+      countries[i].style.display = "";
+    } else {
+      countries[i].style.display = "none";
+    }
+  }
+}
+
+function inputListener() {
+  document.querySelector(".search-input").addEventListener("input", (e) => {
+    searchCountry(e);
+  });
+}
