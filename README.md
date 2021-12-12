@@ -1,4 +1,4 @@
-# COVID-19 Info App
+# COVID-19 Info App :microbe:
 
 ## Description
 
