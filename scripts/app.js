@@ -1,8 +1,7 @@
 //--------------------- Data Creation---------------------
 
 const apis = {
-  proxy: "https://api.codetabs.com/v1/proxy?quest=",
-  countryAPI: "https://restcountries.herokuapp.com/api/v1/",
+  countryAPI: "https://restcountries.com/v3.1/all",
   covidAPI: "https://corona-api.com/countries/",
   covidGlobal: "https://corona-api.com/timeline",
 };
@@ -14,7 +13,7 @@ const continentsClicked = [];
 // Create and object that contains all countries by continent.
 const getCountriesData = async () => {
   try {
-    const { data } = await axios.get(apis.proxy + apis.countryAPI);
+    const { data } = await axios.get(apis.countryAPI);
     data.forEach((country) => {
       region = country.region.toLowerCase();
       countriesData[region]
