@@ -1,7 +1,7 @@
 //--------------------- Data Creation---------------------
 
 const apis = {
-  proxy: "https://intense-mesa-62220.herokuapp.com/",
+  proxy: "https://api.codetabs.com/v1/proxy?quest=",
   countryAPI: "https://restcountries.herokuapp.com/api/v1/",
   covidAPI: "https://corona-api.com/countries/",
   covidGlobal: "https://corona-api.com/timeline",
